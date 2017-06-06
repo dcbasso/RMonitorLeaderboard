@@ -13,6 +13,18 @@ provide an estimate of time or laps remaining (based on time to go / laps to go 
 
 In addition to the swing application, this repository contains library packages for handling rmonitor feed data.
 
+PROJECT TODOS
+------------------------
+1. Add "pom.xml";
+2. Create a new Screen to Configure Remote Server informations;
+2.1. This screen will test the connection and save this information;
+3. Implement the code to send data information to Remote Server;
+3.1. In this first version, will be something simple, to have a lightweight server;
+4. Make a installer
+4.1. Windows (InnoSetup)
+4.2. Debian/Ubuntu
+4.3. Others distros (zip file)
+
 Building the Application
 ------------------------
 
