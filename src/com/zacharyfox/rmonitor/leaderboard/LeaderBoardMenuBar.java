@@ -9,12 +9,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 
-import com.zacharyfox.rmonitor.leaderboard.frames.AboutFrame;
-import com.zacharyfox.rmonitor.leaderboard.frames.ConnectFrame;
-import com.zacharyfox.rmonitor.leaderboard.frames.EstimatorFrame;
-import com.zacharyfox.rmonitor.leaderboard.frames.MainFrame;
-import com.zacharyfox.rmonitor.leaderboard.frames.PlayerFrame;
-import com.zacharyfox.rmonitor.leaderboard.frames.RecorderFrame;
+import com.zacharyfox.rmonitor.leaderboard.frames.*;
 
 public class LeaderBoardMenuBar extends JMenuBar
 {
@@ -28,6 +23,8 @@ public class LeaderBoardMenuBar extends JMenuBar
 	private final JMenuItem recorderMenuItem;
 	private final JMenu toolsMenu;
 	private final JMenu viewMenu;
+	private final JMenu remoteServerMenu;
+	private final JMenuItem configurationMenuItem;
 	private static final long serialVersionUID = -4625321135214323710L;
 
 	public LeaderBoardMenuBar(final MainFrame mainFrame)
@@ -102,6 +99,22 @@ public class LeaderBoardMenuBar extends JMenuBar
 		});
 
 		toolsMenu.add(estimatorMenuItem);
+
+		remoteServerMenu = new JMenu("Remote Server");
+		add(toolsMenu);
+
+		configurationMenuItem = new JMenuItem("Configuration");
+		configurationMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
+				ServerConfigurationFrame newFrame = ServerConfigurationFrame.getInstance(mainFrame);
+				newFrame.setVisible(true);
+			}
+		});
+		remoteServerMenu.add(configurationMenuItem);
+		add(remoteServerMenu);
+
 
 		helpMenu = new JMenu("Help");
 		helpMenu.setBorder(UIManager.getBorder("MenuItem.border"));

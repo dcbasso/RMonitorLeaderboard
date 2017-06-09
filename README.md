@@ -43,7 +43,7 @@ This package contains classes for each type of message provided in the protocol,
 from an ascii string. Example usage below (returns a Heartbeat):
 
 	import com.zacharyfox.rmonitor.message.*
-	
+
 	String line = "$F,14,\"00:12:45\",\"13:34:23\",\"00:09:47\",\"Green\"";
 	RMonitorMessage message = Factory.getMessage(line);
 
@@ -55,7 +55,7 @@ Duration takes time values as strings ("00:01:23.456"), integers (milliseconds),
 feed and stores them as milliseconds.
 
 	import com.zacharyfox.rmonitor.utils.Duration
-	
+
 	Duration duration = new Duration("00:01:23.456");
 
 #### Connection
@@ -63,12 +63,20 @@ feed and stores them as milliseconds.
 Connection extends Socket and contains a BufferedLineReader.
 
 	import com.zacharyfox.rmonitor.utils.Connection;
-	
+
 	String ip = "127.0.0.1";
 	Integer port = 50000;
 	Connection connection = new Connection(ip, port);
-	
+
 	while ((line = connection.readLine()) != null) {
 		System.out.println(line);
 	}
 
+
+	RELEASES
+	------------------------
+	1.0:
+	- Added pom.xml to the Project.
+
+	1.1 (2017/06/08):
+	- Added Screen and all structure to configure remote server IP and PORT;
