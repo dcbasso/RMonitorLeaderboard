@@ -54,7 +54,7 @@ public class Player extends SwingWorker<Integer, String>
 			while ((line = bufferedReader.readLine()) != null) {
 				String[] tokens = line.split(" ", 2);
 				long tS = Integer.parseInt(tokens[0]);
-				System.out.println(tokens[1]);
+//				System.out.println(tokens[1]);
 				out.println(tokens[1]);
 				Thread.sleep((int) ((tS - lastTs) / 10));
 				lastTs = tS;

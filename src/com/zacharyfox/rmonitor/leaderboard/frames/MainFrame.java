@@ -30,7 +30,10 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
+import com.zacharyfox.rmonitor.utils.TableModelJsonParser;
 import net.miginfocom.swing.MigLayout;
 
 import com.zacharyfox.rmonitor.entities.Race;
@@ -41,6 +44,8 @@ import com.zacharyfox.rmonitor.leaderboard.Worker;
 import com.zacharyfox.rmonitor.utils.Duration;
 import com.zacharyfox.rmonitor.utils.Estimator;
 import com.zacharyfox.rmonitor.utils.Recorder;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainFrame extends JFrame implements ActionListener
 {
@@ -160,6 +165,16 @@ public class MainFrame extends JFrame implements ActionListener
 		leaderBoardTable.setRowHeight(18);
 		leaderBoardTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		leaderBoardTable.setRowSelectionAllowed(false);
+		leaderBoardTable.getModel().addTableModelListener(new TableModelListener() {
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				try {
+					TableModelJsonParser.toJson(leaderBoardTable.getModel());
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		resultsScrollPane.setViewportView(leaderBoardTable);
 
 		menuBar = new LeaderBoardMenuBar(this);

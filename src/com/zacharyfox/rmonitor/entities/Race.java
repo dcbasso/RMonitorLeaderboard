@@ -132,7 +132,7 @@ public class Race
 			} else if (message.getClass() == PassingInfo.class) {
 				Competitor.updateOrCreate(message);
 			} else {
-				System.out.println(message);
+//				System.out.println(message);
 			}
 		}
 	}

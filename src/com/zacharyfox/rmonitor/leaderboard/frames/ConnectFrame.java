@@ -28,7 +28,7 @@ public class ConnectFrame extends JFrame
 		setBounds(100, 100, 400, 150);
 
 		ip = new JTextField();
-		ip.setText("127.0.0.1");
+		ip.setText("192.168.25.12");
 		getContentPane().add(ip, "cell 1 0,growx");
 		ip.setColumns(10);
 

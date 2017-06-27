@@ -19,7 +19,7 @@ public class Settings {
 
     private static Settings instance;
     private String remoteServerIp = "127.0.0.1";
-    private String remoteServerPort = "810";
+    private String remoteServerPort = "8080";
 
     private Settings() {
         load();
