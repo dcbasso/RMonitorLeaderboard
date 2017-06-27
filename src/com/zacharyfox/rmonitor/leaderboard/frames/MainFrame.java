@@ -16,7 +16,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -32,10 +31,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-
 import com.zacharyfox.rmonitor.utils.TableModelJsonParser;
 import net.miginfocom.swing.MigLayout;
-
 import com.zacharyfox.rmonitor.entities.Race;
 import com.zacharyfox.rmonitor.leaderboard.LeaderBoardMenuBar;
 import com.zacharyfox.rmonitor.leaderboard.LeaderBoardTable;
@@ -45,7 +42,6 @@ import com.zacharyfox.rmonitor.utils.Duration;
 import com.zacharyfox.rmonitor.utils.Estimator;
 import com.zacharyfox.rmonitor.utils.Recorder;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainFrame extends JFrame implements ActionListener
 {

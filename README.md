@@ -80,3 +80,7 @@ Connection extends Socket and contains a BufferedLineReader.
 
 	1.1 (2017/06/08):
 	- Added Screen and all structure to configure remote server IP and PORT;
+
+	1.2 (2017/06/26):
+	- Added a JTable Model parser to JSON object;
+	- Removed some sysout from code;
