@@ -13,6 +13,8 @@ import com.zacharyfox.rmonitor.message.Factory;
 import com.zacharyfox.rmonitor.utils.Connection;
 import com.zacharyfox.rmonitor.utils.Estimator;
 import com.zacharyfox.rmonitor.utils.Recorder;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 
 public class Worker extends SwingWorker<Integer, String>
 {
@@ -109,6 +111,7 @@ public class Worker extends SwingWorker<Integer, String>
 			}
 
 			if (message.substring(0, 1).equals("$")) {
+				firePropertyChange("updateScreen", false, true);
 				race.update(Factory.getMessage(message));
 				if (recorder != null) {
 					recorder.push(message);

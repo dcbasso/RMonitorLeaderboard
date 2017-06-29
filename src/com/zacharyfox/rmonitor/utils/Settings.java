@@ -100,6 +100,14 @@ public class Settings {
         return read;
     }
 
+    public String getEndpoint() {
+        StringBuilder sb  = new StringBuilder();
+        sb.append(this.getRemoteServerIp());
+        sb.append(":");
+        sb.append(this.getRemoteServerPort());
+        return sb.toString();
+    }
+
     public static Settings getInstance() {
         if (instance == null) {
             instance = new Settings();

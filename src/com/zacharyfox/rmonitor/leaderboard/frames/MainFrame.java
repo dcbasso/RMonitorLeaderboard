@@ -31,19 +31,22 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import com.zacharyfox.rmonitor.utils.TableModelJsonParser;
+import javax.ws.rs.core.MediaType;
+
+import com.sun.jersey.api.client.AsyncWebResource;
+import com.sun.jersey.api.client.Client;
+import com.zacharyfox.rmonitor.utils.*;
 import net.miginfocom.swing.MigLayout;
 import com.zacharyfox.rmonitor.entities.Race;
 import com.zacharyfox.rmonitor.leaderboard.LeaderBoardMenuBar;
 import com.zacharyfox.rmonitor.leaderboard.LeaderBoardTable;
 import com.zacharyfox.rmonitor.leaderboard.LeaderBoardTableModel;
 import com.zacharyfox.rmonitor.leaderboard.Worker;
-import com.zacharyfox.rmonitor.utils.Duration;
-import com.zacharyfox.rmonitor.utils.Estimator;
-import com.zacharyfox.rmonitor.utils.Recorder;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-public class MainFrame extends JFrame implements ActionListener
+public class MainFrame extends JFrame implements ActionListener, PropertyChangeListener
 {
 	private final JLabel elapsedTime;
 	private Estimator estimator;
@@ -66,7 +69,11 @@ public class MainFrame extends JFrame implements ActionListener
 	private final JLabel timeToGo;
 	private final JPanel titleBar;
 	private final JLabel trackName;
+	private final JLabel trackLength;
+	private final JLabel flag;
 	private Worker worker;
+
+	private JSONArray itemsJsonArray = null;
 
 	private static final long serialVersionUID = -743830529485841322L;
 
@@ -76,6 +83,9 @@ public class MainFrame extends JFrame implements ActionListener
 		this.setBounds(100, 100, 870, 430);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(new MigLayout("", "[grow][grow]", "[][10:10:10][][][grow]"));
+
+		trackLength = new JLabel();
+		flag = new JLabel();
 
 		titleBar = new JPanel();
 		this.getContentPane().add(titleBar, "cell 0 0 2 1,grow");
@@ -165,7 +175,10 @@ public class MainFrame extends JFrame implements ActionListener
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				try {
-					TableModelJsonParser.toJson(leaderBoardTable.getModel());
+					JSONArray itens = TableModelJsonParser.toJsonArray(leaderBoardTable.getModel());
+					if (itens != null) {
+						itemsJsonArray = itens;
+					}
 				} catch (JSONException e1) {
 					e1.printStackTrace();
 				}
@@ -194,6 +207,7 @@ public class MainFrame extends JFrame implements ActionListener
 				worker.setRecorder(recorder);
 			}
 			worker.execute();
+			worker.getPropertyChangeSupport().addPropertyChangeListener("updateScreen", this);
 		} else if (e.getActionCommand().equals("Disconnect")) {
 			worker.cancel(true);
 		}
@@ -324,6 +338,7 @@ public class MainFrame extends JFrame implements ActionListener
 
 		if (evt.getPropertyName().equals("flagStatus")) {
 			setFlagColor(evt.getNewValue().toString());
+			flag.setText(evt.getNewValue().toString());
 		}
 
 		if (evt.getPropertyName().equals("trackName")) {
@@ -332,7 +347,39 @@ public class MainFrame extends JFrame implements ActionListener
 
 		if (evt.getPropertyName().equals("trackLength")) {
 			// TODO: Handle Track Length
-			// trackLength.setText(evt.getNewValue().toString());
+			 trackLength.setText(evt.getNewValue().toString());
 		}
 	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		sendDataToServer();
+	}
+
+	public JSONObject getAllInformations() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("runName", runName.getText());
+		jsonObject.put("elapsedTime", elapsedTime.getText());
+		jsonObject.put("timeToGo", timeToGo.getText());
+		jsonObject.put("flagStatus", flag.getText());
+		jsonObject.put("trackName", trackName.getText());
+		jsonObject.put("trackLength", trackLength.getText());
+		if (itemsJsonArray != null) {
+			jsonObject.put("leaderBoard", itemsJsonArray);
+		}
+		return jsonObject;
+	}
+
+	private void sendDataToServer() {
+		try {
+			JSONObject jsonObject = getAllInformations();
+//			Client client = Client.create();
+//			AsyncWebResource async = client.asyncResource(Settings.getInstance().getEndpoint());
+//			async.entity(jsonObject, MediaType.APPLICATION_JSON);
+//			async.post(jsonObject);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

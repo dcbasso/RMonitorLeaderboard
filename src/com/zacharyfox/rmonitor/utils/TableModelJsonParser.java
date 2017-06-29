@@ -14,11 +14,10 @@ public class TableModelJsonParser {
 
     private static final String BEST_TIME = "Best Time";
 
-    public static JSONObject toJson(TableModel tableModel) throws JSONException {
-        JSONObject jsonObject = null;
+    public static JSONArray toJsonArray(TableModel tableModel) throws JSONException {
+        JSONArray items = null;
         if (tableModel != null) {
-            jsonObject = new JSONObject();
-            JSONArray items = new JSONArray();
+            items = new JSONArray();
             JSONObject jsonRowItem;
             for (int rowIndex =0; rowIndex < tableModel.getRowCount(); rowIndex++) {
                 jsonRowItem = new JSONObject();
@@ -27,9 +26,8 @@ public class TableModelJsonParser {
                 }
                 items.put(jsonRowItem);
             }
-            System.out.println(items.toString());
         }
-        return jsonObject;
+        return items;
     }
 
     private static void put(JSONObject jsonRowItem, String columnName, Object value) throws JSONException {
