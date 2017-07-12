@@ -102,9 +102,11 @@ public class Settings {
 
     public String getEndpoint() {
         StringBuilder sb  = new StringBuilder();
+        sb.append("http://");
         sb.append(this.getRemoteServerIp());
         sb.append(":");
         sb.append(this.getRemoteServerPort());
+        sb.append("/RMonitorLeaderboardWebApp/rest/run/update");
         return sb.toString();
     }
 

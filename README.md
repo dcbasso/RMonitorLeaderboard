@@ -15,7 +15,7 @@ In addition to the swing application, this repository contains library packages 
 
 PROJECT TODOS
 ------------------------
-1. Add "pom.xml";
+1. Improve Settings;
 2. Create a new Screen to Configure Remote Server informations;
 	* This screen will test the connection and save this information;
 3. Implement the code to send data information to Remote Server;
@@ -28,9 +28,11 @@ PROJECT TODOS
 Building the Application
 ------------------------
 
+Current revision: 1.3
+ 
 // TODO
 
-LIbrary Packages
+Library Packages
 ----------------
 
 ### com.zacharyfox.rmonitor.entities
@@ -84,3 +86,8 @@ Connection extends Socket and contains a BufferedLineReader.
 	1.2 (2017/06/26):
 	- Added a JTable Model parser to JSON object;
 	- Removed some sysout from code;
+	
+	1.3 (2017/07/11):
+	- Added ASYNC POST to send data to server.
+	- Fixed problems with Settings (will need improve this feature in the future).
+	

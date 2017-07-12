@@ -32,7 +32,6 @@ import javax.swing.UIManager;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.ws.rs.core.MediaType;
-
 import com.sun.jersey.api.client.AsyncWebResource;
 import com.sun.jersey.api.client.Client;
 import com.zacharyfox.rmonitor.utils.*;
@@ -72,6 +71,7 @@ public class MainFrame extends JFrame implements ActionListener, PropertyChangeL
 	private final JLabel trackLength;
 	private final JLabel flag;
 	private Worker worker;
+	private Client client;
 
 	private JSONArray itemsJsonArray = null;
 
@@ -373,13 +373,18 @@ public class MainFrame extends JFrame implements ActionListener, PropertyChangeL
 	private void sendDataToServer() {
 		try {
 			JSONObject jsonObject = getAllInformations();
-//			Client client = Client.create();
-//			AsyncWebResource async = client.asyncResource(Settings.getInstance().getEndpoint());
-//			async.entity(jsonObject, MediaType.APPLICATION_JSON);
-//			async.post(jsonObject);
+			AsyncWebResource async = this.getClient().asyncResource(Settings.getInstance().getEndpoint());
+			async.entity(jsonObject.toString(), MediaType.APPLICATION_JSON).post();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private Client getClient() {
+		if (this.client == null) {
+			this.client = Client.create();
+		}
+		return this.client;
 	}
 
 }
